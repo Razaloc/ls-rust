@@ -18,16 +18,18 @@ fn main() -> Result<(), Error> {
         if input.types {
             push_type(&mut accumulate_types, &directory)?;
         }
-        accumulate_paths.push(directory.path().display().to_string());
+        let path_name = directory.path().display().to_string();
+        let split = path_name.split("/");
+        accumulate_paths.push(split.last().unwrap().to_string());
     }
     //print vectors
     if input.types {
-        for i in 1..accumulate_paths.len() {
-            println!("{:?}, {:?}", &accumulate_paths[i], &accumulate_types[i]);
+        for i in 0..accumulate_paths.len() {
+            println!("{}, {}", &accumulate_paths[i], &accumulate_types[i]);
         }
     } else {
-        for i in 1..accumulate_paths.len() {
-            println!("{:?}", &accumulate_paths[i]);
+        for i in 0..accumulate_paths.len() {
+            println!("{}", &accumulate_paths[i]);
         }
     }
     Ok(())
