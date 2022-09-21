@@ -11,7 +11,7 @@ fn main() -> Result<(), Error> {
     };
     input.update(args);
     let mut accumulate_types: Vec<String> = Vec::new();
-    let mut accumulate_paths: Vec<String> = Vec::new();
+    let mut accumulate_names: Vec<String> = Vec::new();
     //fill vectors
     for element in read_dir(input.path)? {
         let directory = element?;
@@ -20,16 +20,21 @@ fn main() -> Result<(), Error> {
         }
         let path_name = directory.path().display().to_string();
         let split = path_name.split("/");
-        accumulate_paths.push(split.last().unwrap().to_string());
+
+        let name = split.last();
+        match name {
+            Some(x) => Some(accumulate_names.push(x.to_string())),
+            None => None,
+        };
     }
     //print vectors
     if input.types {
-        for i in 0..accumulate_paths.len() {
-            println!("{}: {}", &accumulate_types[i], &accumulate_paths[i]);
+        for i in 0..accumulate_names.len() {
+            println!("{}: {}", &accumulate_types[i], &accumulate_names[i]);
         }
     } else {
-        for i in 0..accumulate_paths.len() {
-            println!("{}", &accumulate_paths[i]);
+        for i in 0..accumulate_names.len() {
+            println!("{}", &accumulate_names[i]);
         }
     }
     Ok(())
