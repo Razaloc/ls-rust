@@ -20,11 +20,8 @@ fn main() -> Result<(), Error> {
         }
         let path_name = directory.path().display().to_string();
         let split = path_name.split("/");
-
-        let name = split.last();
-        match name {
-            Some(x) => Some(accumulate_names.push(x.to_string())),
-            None => None,
+        if let Some(name) = split.last() {
+            accumulate_names.push(name.to_string())
         };
     }
     //print vectors
@@ -63,7 +60,7 @@ fn push_type(input: &mut Vec<String>, directory: &DirEntry) -> Result<(), Error>
     if metadata.is_file() {
         dir_type = "file";
     } else if metadata.is_dir() {
-        dir_type = "dir";
+        dir_type = "dir ";
     } else {
         dir_type = "???";
     }
